@@ -53,11 +53,9 @@ def process_file(species: str, sound_name: str):
     species_base = BASE+"/"+species+"/"
     sound, sr = librosa.load(species_base + sound_name + ".ogg")
     frames = librosa.util.frame(sound, frame_length=frame_len, hop_length=hop_len, axis=0)
-     
-
-    print(f"##########{species}/{sound_name}", file=sys.stderr)
+    
     frames = move_data_to_device(frames.copy(), device)
-    print(f"##########{species}/{sound_name}", file=sys.stderr)
+    
     batch_output_dict = {}
     with torch.no_grad():
         batch_output_dict = model(frames, None)
